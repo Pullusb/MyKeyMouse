@@ -7,13 +7,17 @@ Blender keymapper addon - Map shortcuts on mouse button 4 and 5
   
 Description:
   
-The purpose is to add '*view selection*' and '*view all*' shortcuts on mouse. The location of *home* key and *numpad period* is far from both hands and force you to quit temporarily your rest positions, tending to break the fluidity of the workflow.
+Add '*view selection*' and '*view all*' shortcuts on mouse.
   
 Keymapp a list of shortcut for almost all editor where:
 - *mouse button 4* (often used as 'previous' action) is used to focus on selected items. (like *numpad period* button in 3D view)
 - *mouse button 5* (often used as 'next' action) is used to fit all elements in view. (like *home* button in timeline)
   
 It does NOT affect any original shortcut on keyboard.
+  
+### why ?
+The location of *home* key and *numpad period* is far from both hands and force you to quit temporarily your rest positions, tending to break the fluidity of the workflow.
+ 
   
 Usual location of button 4 and 5 on a mouse with basic extra buttons (this may vary a lot on different device)
 
