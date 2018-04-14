@@ -22,8 +22,8 @@ Usual location of button 4 and 5 on a mouse with basic extra buttons (this may v
   
 ### Why ?
 The location of *home* key and *numpad period* is far from both hands and force you to quit temporarily your rest positions, tending to break the fluidity of the workflow.
- 
 <br/>
+  
 ### Addon preferences
 
 In the addons preferences you can choose to:
