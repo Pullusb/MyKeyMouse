@@ -29,15 +29,11 @@ In the addons preferences you can choose to:
 - Invert the buttons
 - In 3D view : Recenter the view on mouse cursor (like "Alt+F") instead of focus on selection
 - In 3D view : Toggle isolate (*numpad slash* button) instead of view all
-<!--
-### An exception to confirm the rule
-There's an exception : *mouse button 5* in 3D view does not call *view all* (easily accessible with left hand through *Shift+C*) but *view local* (equivalent of *numpad slash*).
-If you want the *view all* action to be completely consistent even in 3D view, the line in the code is ready and explained, you just have to edit the .py file to comment line 55 and uncomment line 57 and voila !
--->  
+  
   
 Thanks to [Vincent Lamy for the base idea](https://www.nothing-is-3d.com/article22/blender-utiliser-les-boutons-lateraux-de-la-souris)
   
   
-## updates 0.0.3 (14/04/2018):
+### updates 0.0.3 (14/04/2018):
 - By default shortcuts are now completely consistent (view_selected and view all everywhere)
 - added addon preferences to invert buttons and customize shortcut in 3D view.
