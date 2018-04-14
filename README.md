@@ -1,5 +1,5 @@
 # MyKeyMouse
-Blender keymapper addon - Map shortcuts on mouse button 4 and 5
+Blender keymapper addon - Map shortcuts on mouse button 4 and 5 for mouse with additional buttons.
 
 **[Download latest](https://github.com/Pullusb/MyKeyMouse/raw/master/MyKeyMouse.py)** (right click, save Target as)  
   
