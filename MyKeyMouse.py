@@ -2,7 +2,7 @@ bl_info = {
     "name": "MyKeyMouse",
     "description": "Add 'view selected' and 'view all' actions to mouse buttons 4 and 5",
     "author": "Samuel Bernou",
-    "version": (0, 0, 3),
+    "version": (0, 0, 4),
     "blender": (2, 79, 0),
     "location": "Mouse button 4 (usually 'previous') and 5 (usually 'next') on almost all editors",
     "warning": "",
@@ -129,7 +129,8 @@ def unregister_keymaps():
     for km in addon_keymaps:
         for kmi in km.keymap_items:
             km.keymap_items.remove(kmi)
-        wm.keyconfigs.addon.keymaps.remove(km)
+        ## Can't (and supposedly shouldn't ) suppress original category name...
+        # wm.keyconfigs.addon.keymaps.remove(km)
     addon_keymaps.clear()
 
 
