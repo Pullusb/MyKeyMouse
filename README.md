@@ -23,17 +23,32 @@ Usual location of button 4 and 5 on a mouse with basic extra buttons (this may v
 ### Why ?
 The location of *home* key and *numpad period* is far from both hands and force you to quit temporarily your rest positions, tending to break the fluidity of the workflow.
 <br/>
+
+### Other keymaps
+- *Ctrl + mouse button 4* Recenter the view on mouse cursor (like "Alt+F"), can be inverted in addon prefs  
+- *Ctrl + mouse button 5* Toggle isolate selection (*numpad slash* button), can be inverted in addon prefs  
+<br/> 
+
+- *Shift + mouse button 4* Snap 3D cursor to selection  
+- *Shift + mouse button 5* Snap selection to 3D cursor  
+<br/>
   
 ### Addon preferences
 
 In the addons preferences you can choose to:
-- Invert the buttons
-- In 3D view : Recenter the view on mouse cursor (like "Alt+F") instead of focus on selection  
-- In 3D view : Toggle isolate (*numpad slash* button) instead of view all  
+- Invert the buttons (for all)
+- In 3D view : Recenter the view on mouse cursor (like "Alt+F") instead of focus on selection (by default on ctrl+button)
+- In 3D view : Toggle isolate (*numpad slash* button) instead of view all (by default on ctrl+button)
 <br/>
-  
+ 
 Thanks to [Vincent Lamy for the base idea](https://www.nothing-is-3d.com/article22/blender-utiliser-les-boutons-lateraux-de-la-souris)
-  
+
+### Update 0.0.4 and 0.0.5 (22/04/2018):
+- Fix bad keymap unregister
+- Added modifiers functions:
+  - Shift combo : cursor to selection and selection to cursor
+  - Ctrl combo : access alternative view tweak
+
 ### updates 0.0.3 (14/04/2018):
 - By default shortcuts are now completely consistent (view_selected and view all everywhere)
 - added addon preferences to invert buttons and customize shortcut in 3D view.
