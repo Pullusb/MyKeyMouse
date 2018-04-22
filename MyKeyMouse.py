@@ -2,7 +2,7 @@ bl_info = {
     "name": "MyKeyMouse",
     "description": "Add 'view selected' and 'view all' actions to mouse buttons 4 and 5",
     "author": "Samuel Bernou",
-    "version": (0, 0, 4),
+    "version": (0, 0, 5),
     "blender": (2, 79, 0),
     "location": "Mouse button 4 (usually 'previous') and 5 (usually 'next') on almost all editors",
     "warning": "",
@@ -62,30 +62,41 @@ def register_keymaps():
     
     ]
 
+    #3D view specific (with modifiers : ctrl, Shift, Alt)
     if addon_prefs.mkmouse_viewport_center_on_mouse == True:
         ##button 4 - 3D view > keymap view center pick on mouse (Alt+F)
-        shortcuts_items.append(["3D View", "VIEW_3D", "view3d.view_center_pick", key_one])
+        shortcuts_items.append(["3D View", "VIEW_3D", "view3d.view_center_pick", key_one, False, False, False])
+        shortcuts_items.append(["3D View", "VIEW_3D", "view3d.view_selected", key_one, True, False, False])
     else:
         ##- view selected in 3D view (more consistent, same usage in all editor)
-        shortcuts_items.append(["3D View", "VIEW_3D", "view3d.view_selected", key_one])
+        shortcuts_items.append(["3D View", "VIEW_3D", "view3d.view_selected", key_one, False, False, False])
+        shortcuts_items.append(["3D View", "VIEW_3D", "view3d.view_center_pick", key_one, True, False, False])
 
 
     if addon_prefs.mkmouse_viewport_local_view == True:
         ##button 5 - 3D view > keymap local_view (numpad_slash)
-        shortcuts_items.append(["3D View", "VIEW_3D", "view3d.localview", key_two])
+        shortcuts_items.append(["3D View", "VIEW_3D", "view3d.localview", key_two, False, False, False])
+        shortcuts_items.append(["3D View", "VIEW_3D", "view3d.view_all", key_two, True, False, False])
     else:
         ##- view all in 3D view (more consistent, same usage in all editor)
-        shortcuts_items.append(["3D View", "VIEW_3D", "view3d.view_all", key_two])
+        shortcuts_items.append(["3D View", "VIEW_3D", "view3d.view_all", key_two, False, False, False])
+        shortcuts_items.append(["3D View", "VIEW_3D", "view3d.localview", key_two, True, False, False])
 
 
-    ##appending keymap from above list
+    # Snapping utility with shift (cursor to selection and selection to cursor)
+    shortcuts_items.append(["3D View", "VIEW_3D", "view3d.snap_cursor_to_selected", key_one, False, True, False])
+    shortcuts_items.append(["3D View", "VIEW_3D", "view3d.snap_selected_to_cursor", key_two, False, True, False])
+
+    ## appending all keymap from above list
     addon = bpy.context.window_manager.keyconfigs.addon
     for item in shortcuts_items:
         #print(item)# printing items for debug
         km = addon.keymaps.new(name = item[0], space_type = item[1])
-        kmi = km.keymap_items.new(item[2], type = item[3], value = "PRESS")
+        if len(item) > 4:#contain modifiers keys
+            kmi = km.keymap_items.new(item[2], type = item[3], value = "PRESS", ctrl=item[4], shift=item[5],alt=item[6])
+        else:
+            kmi = km.keymap_items.new(item[2], type = item[3], value = "PRESS")
         addon_keymaps.append(km)
-
 
 ###---user pref 
 
@@ -97,13 +108,13 @@ class My_key_mouse_addon_pref(bpy.types.AddonPreferences):
         default=False,
         )
     mkmouse_viewport_local_view = bpy.props.BoolProperty(
-        name="Use local view (like numpad slash) instead of view all",
+        name="Use local view (instead of view all)",
         default=False,
-        )
+        )#"Use local view (like numpad slash) instead of view all (else combine ctrl)"
     mkmouse_viewport_center_on_mouse = bpy.props.BoolProperty(
-        name="Use centering view on mouse (like Alt+F) instead of view selected",
+        name="Use centering view on mouse (instead of view selected)",
         default=False,
-        )
+        )#"Use centering view on mouse (like Alt+F) instead of view selected (else combine ctrl)"
 
     def draw(self, context):
         layout = self.layout
@@ -116,11 +127,21 @@ class My_key_mouse_addon_pref(bpy.types.AddonPreferences):
         layout.label(text="")
 
         layout.label(
+            text="Only in 3D viewport:")
+        
+        layout.label(text="Ctrl + mouse Prev button = Use local view (like numpad slash)")
+        layout.label(text="Ctrl + mouse Next button = Use centering view on mouse (like Alt+F)")
+
+        layout.label("Cursor Snapping:")
+        layout.label("Shift + mouse Prev button = 3D cursor to selection")
+        layout.label("Shift + mouse Next button = selection to 3D cursor")
+        layout.label(text="")
+
+        layout.label(
             text="Customization (save settings and restart Blender to apply changes)")
         layout.prop(self, "mkmouse_invert_buttons")
- 
         layout.label(
-            text="Only in 3D viewport:")
+            text="Options to swap 'ctrl' modifier calls in 3D viewport:") 
         layout.prop(self, "mkmouse_viewport_center_on_mouse")
         layout.prop(self, "mkmouse_viewport_local_view")
 
