@@ -32,6 +32,10 @@ The location of *home* key and *numpad period* is far from both hands and force 
 - *Shift + mouse button 4* Snap 3D cursor to selection  
 - *Shift + mouse button 5* Snap selection to 3D cursor  
 <br/>
+
+- *Alt + mouse button 4* Jump to previous keyframe  
+- *Alt + mouse button 5* Jump to next keyframe  
+<br/>
   
 ### Addon preferences
 
