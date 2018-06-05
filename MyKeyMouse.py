@@ -2,7 +2,7 @@ bl_info = {
     "name": "MyKeyMouse",
     "description": "Add 'view selected' and 'view all' actions to mouse buttons 4 and 5",
     "author": "Samuel Bernou",
-    "version": (0, 0, 5),
+    "version": (0, 0, 7),
     "blender": (2, 79, 0),
     "location": "Mouse button 4 (usually 'previous') and 5 (usually 'next') on almost all editors",
     "warning": "",
@@ -60,6 +60,8 @@ def register_keymaps():
     ["Clip Graph Editor", "CLIP_EDITOR", "clip.graph_view_all", key_two],
     ["Clip Dopesheet Editor", "CLIP_EDITOR", "clip.dopesheet_view_all", key_two],
     
+    #["Frames", "EMPTY", "screen.keyframe_jump", key_one, False, False, True]
+    
     ]
 
     #3D view specific (with modifiers : ctrl, Shift, Alt)
@@ -83,9 +85,10 @@ def register_keymaps():
         shortcuts_items.append(["3D View", "VIEW_3D", "view3d.localview", key_two, True, False, False])
 
 
-    # Snapping utility with shift (cursor to selection and selection to cursor)
+    # Snapping utility with shift (cursor to selection and selection to selected)
     shortcuts_items.append(["3D View", "VIEW_3D", "view3d.snap_cursor_to_selected", key_one, False, True, False])
     shortcuts_items.append(["3D View", "VIEW_3D", "view3d.snap_selected_to_cursor", key_two, False, True, False])
+
 
     ## appending all keymap from above list
     addon = bpy.context.window_manager.keyconfigs.addon
@@ -97,6 +100,17 @@ def register_keymaps():
         else:
             kmi = km.keymap_items.new(item[2], type = item[3], value = "PRESS")
         addon_keymaps.append(km)
+
+
+        #special case, combo keyframe jump with alt (button 6 et 7 not working with logitech software...)
+        km = addon.keymaps.new(name = "Frames", space_type = "EMPTY")
+        #kmi = km.keymap_items.new("screen.keyframe_jump", type = "BUTTON6MOUSE", value = "PRESS")#mouse button above 5 aren't recognize on logitech mouse on windaube
+        kmi = km.keymap_items.new("screen.keyframe_jump", type = key_one, value = "PRESS", alt = True)
+        kmi.properties.next = False
+        #kmi = km.keymap_items.new("screen.keyframe_jump", type = "BUTTON7MOUSE", value = "PRESS")#mouse button above 5 aren't recognize on logitech mouse on windaube
+        kmi = km.keymap_items.new("screen.keyframe_jump", type = key_two, value = "PRESS", alt = True)
+        kmi.properties.next = True
+
 
 ###---user pref 
 
@@ -141,7 +155,7 @@ class My_key_mouse_addon_pref(bpy.types.AddonPreferences):
             text="Customization (save settings and restart Blender to apply changes)")
         layout.prop(self, "mkmouse_invert_buttons")
         layout.label(
-            text="Options to swap 'ctrl' modifier calls in 3D viewport:") 
+            text="Options to swap calls in 3D viewport (accessible with 'ctrl' modifier):") 
         layout.prop(self, "mkmouse_viewport_center_on_mouse")
         layout.prop(self, "mkmouse_viewport_local_view")
 
