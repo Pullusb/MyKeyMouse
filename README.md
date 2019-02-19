@@ -2,6 +2,8 @@
 Blender keymapper addon - Map shortcuts on mouse button 4 and 5 for mouse with additional buttons.
 
 **[Download latest](https://github.com/Pullusb/MyKeyMouse/raw/master/MyKeyMouse.py)** (right click, save Target as)  
+
+**[Download older (2.7 version)](https://github.com/Pullusb/MyKeyMouse/raw/master/MyKeyMouse_279.py)** (right click, save Target as)
   
 --------
   
@@ -46,6 +48,9 @@ In the addons preferences you can choose to:
 <br/>
  
 Thanks to [Vincent Lamy for the base idea](https://www.nothing-is-3d.com/article22/blender-utiliser-les-boutons-lateraux-de-la-souris)
+
+### update 0.0.8 (19/02/2019):
+- 2.8 version (may also work 2.7 version, untested)
 
 ### update 0.0.7 (05/06/2018):
 - Added Alt combo to jump keyframe
