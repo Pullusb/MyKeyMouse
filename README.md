@@ -50,7 +50,7 @@ In the addons preferences you can choose to:
 Thanks to [Vincent Lamy for the base idea](https://www.nothing-is-3d.com/article22/blender-utiliser-les-boutons-lateraux-de-la-souris)
 
 ### update 0.0.8 (19/02/2019):
-- 2.8 version (may also work 2.7 version, untested)
+- 2.8 version
 
 ### update 0.0.7 (05/06/2018):
 - Added Alt combo to jump keyframe
