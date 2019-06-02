@@ -29,10 +29,12 @@ The location of *home* key and *numpad period* are far from both hands and force
 ### Other keymaps
 
 - *Ctrl + mouse button 5* Toggle isolate selection (*numpad slash* button)
-<br/> 
+<br/>
+
 - *Shift + mouse button 4* Snap 3D cursor to selection  
 - *Shift + mouse button 5* Snap selection to 3D cursor  
 <br/>
+
 - *Alt + mouse button 4* Jump to previous keyframe  
 - *Alt + mouse button 5* Jump to next keyframe  
 <br/>
