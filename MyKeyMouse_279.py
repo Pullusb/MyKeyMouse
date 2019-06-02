@@ -1,8 +1,8 @@
 bl_info = {
     "name": "MyKeyMouse",
-    "description": "Add 'view selected' and 'view all' actions to mouse buttons 4 and 5",
+    "description": "Add 'view all' and 'view selected' actions to mouse buttons 4 and 5",
     "author": "Samuel Bernou",
-    "version": (0, 0, 7),
+    "version": (0, 0, 9),
     "blender": (2, 79, 0),
     "location": "Mouse button 4 (usually 'previous') and 5 (usually 'next') on almost all editors",
     "warning": "",
@@ -11,14 +11,17 @@ bl_info = {
 
 import bpy
 import os
+#from distutils.version import LooseVersion
 
-#keymap focus view selected (numpad_period) to mouse button 4 on all related editors
-#keymap view all (home key) to mouse button 5 on all related editors
+'''
+keymap view all (home key) to mouse button 4 on all related editors
+keymap focus view selected (numpad_period) to mouse button 5 on all related editors
+plus some special customisation
 
-#customisation
-#3D view only :
-#  Button 4 can view center pick on mouse instead (really a mouse related shortcut)
-#  Button 5 can do local view instead (already have shit+C accessible for view all)
+#available mouse button codenames
+KeyMapItems.new(): keyword argument "type" : ('NONE', 'LEFTMOUSE', 'MIDDLEMOUSE', 'RIGHTMOUSE', 'BUTTON4MOUSE', 'BUTTON5MOUSE', 'BUTTON6MOUSE', 'BUTTON7MOUSE', 'ACTIONMOUSE', 'SELECTMOUSE', 'PEN', 'ERASER', 'MOUSEMOVE', 'INBETWEEN_MOUSEMOVE', 'TR)
+'BUTTON6MOUSE', 'BUTTON7MOUSE' dont seem to work on windows
+'''
 
 
 addon_keymaps = []
@@ -28,15 +31,16 @@ def register_keymaps():
 
     #mouse 4 and 5 often correspond to previous and next on mouse device
     if addon_prefs.mkmouse_invert_buttons == True:
-        key_one = "BUTTON5MOUSE"
-        key_two = "BUTTON4MOUSE"
-    else:#default
         key_one = "BUTTON4MOUSE"
         key_two = "BUTTON5MOUSE"
+    else:#default
+        key_one = "BUTTON5MOUSE"
+        key_two = "BUTTON4MOUSE"
 
     shortcuts_items = [
  
     ##button 4 - focus selection
+    ["3D View", "VIEW_3D", "view3d.view_selected", key_one],
     ["Graph Editor", "GRAPH_EDITOR", "graph.view_selected", key_one],
     ["Dopesheet", 'DOPESHEET_EDITOR', "action.view_selected", key_one],
     ["Sequencer", 'SEQUENCE_EDITOR', "sequencer.view_selected", key_one],
@@ -47,6 +51,7 @@ def register_keymaps():
     ["Outliner", "OUTLINER", "outliner.show_active", key_one],
 
     ##button 5 - view all
+    ["3D View", "VIEW_3D", "view3d.view_all", key_two],
     ["Timeline", "TIMELINE", "time.view_all", key_two],
     ["Graph Editor", "GRAPH_EDITOR", "graph.view_all", key_two],
     ["Image", "IMAGE_EDITOR", "image.view_all", key_two],
@@ -64,31 +69,16 @@ def register_keymaps():
     
     ]
 
-    #3D view specific (with modifiers : ctrl, Shift, Alt)
-    if addon_prefs.mkmouse_viewport_center_on_mouse == True:
-        ##button 4 - 3D view > keymap view center pick on mouse (Alt+F)
-        shortcuts_items.append(["3D View", "VIEW_3D", "view3d.view_center_pick", key_one, False, False, False])
-        shortcuts_items.append(["3D View", "VIEW_3D", "view3d.view_selected", key_one, True, False, False])
-    else:
-        ##- view selected in 3D view (more consistent, same usage in all editor)
-        shortcuts_items.append(["3D View", "VIEW_3D", "view3d.view_selected", key_one, False, False, False])
-        shortcuts_items.append(["3D View", "VIEW_3D", "view3d.view_center_pick", key_one, True, False, False])
-
-
-    if addon_prefs.mkmouse_viewport_local_view == True:
-        ##button 5 - 3D view > keymap local_view (numpad_slash)
-        shortcuts_items.append(["3D View", "VIEW_3D", "view3d.localview", key_two, False, False, False])
-        shortcuts_items.append(["3D View", "VIEW_3D", "view3d.view_all", key_two, True, False, False])
-    else:
-        ##- view all in 3D view (more consistent, same usage in all editor)
-        shortcuts_items.append(["3D View", "VIEW_3D", "view3d.view_all", key_two, False, False, False])
-        shortcuts_items.append(["3D View", "VIEW_3D", "view3d.localview", key_two, True, False, False])
-
+    shortcuts_items.append(["3D View", "VIEW_3D", "view3d.localview", key_one, True, False, False])
 
     # Snapping utility with shift (cursor to selection and selection to selected)
-    shortcuts_items.append(["3D View", "VIEW_3D", "view3d.snap_cursor_to_selected", key_one, False, True, False])
-    shortcuts_items.append(["3D View", "VIEW_3D", "view3d.snap_selected_to_cursor", key_two, False, True, False])
+    shortcuts_items.append(["3D View", "VIEW_3D", "view3d.snap_cursor_to_selected", key_two, False, True, False])
+    shortcuts_items.append(["3D View", "VIEW_3D", "view3d.snap_selected_to_cursor", key_one, False, True, False])
 
+    
+    ##3D view > keymap view center pick on mouse (Alt+F) Changed to 'alt + MMB' to match early 2.8 settings
+    #if LooseVersion(str(bpy.app.version)) < LooseVersion('(2, 80, 0)'):#only set for 2.79
+    shortcuts_items.append(["3D View", "VIEW_3D", "view3d.view_center_pick", "MIDDLEMOUSE", False, False, True])
 
     ## appending all keymap from above list
     addon = bpy.context.window_manager.keyconfigs.addon
@@ -102,7 +92,7 @@ def register_keymaps():
         addon_keymaps.append(km)
 
 
-        #special case, combo keyframe jump with alt (button 6 et 7 not working with logitech software...)
+        #special case (because hold properties), combo keyframe jump with alt (button 6 et 7 not working with logitech software...)
         km = addon.keymaps.new(name = "Frames", space_type = "EMPTY")
         #kmi = km.keymap_items.new("screen.keyframe_jump", type = "BUTTON6MOUSE", value = "PRESS")#mouse button above 5 aren't recognize on logitech mouse on windaube
         kmi = km.keymap_items.new("screen.keyframe_jump", type = key_one, value = "PRESS", alt = True)
@@ -110,6 +100,8 @@ def register_keymaps():
         #kmi = km.keymap_items.new("screen.keyframe_jump", type = "BUTTON7MOUSE", value = "PRESS")#mouse button above 5 aren't recognize on logitech mouse on windaube
         kmi = km.keymap_items.new("screen.keyframe_jump", type = key_two, value = "PRESS", alt = True)
         kmi.properties.next = True
+
+
 
 
 ###---user pref 
@@ -125,10 +117,12 @@ class My_key_mouse_addon_pref(bpy.types.AddonPreferences):
         name="Use local view (instead of view all)",
         default=False,
         )#"Use local view (like numpad slash) instead of view all (else combine ctrl)"
+    '''
     mkmouse_viewport_center_on_mouse = bpy.props.BoolProperty(
         name="Use centering view on mouse (instead of view selected)",
         default=False,
         )#"Use centering view on mouse (like Alt+F) instead of view selected (else combine ctrl)"
+    '''
 
     def draw(self, context):
         layout = self.layout
@@ -143,21 +137,28 @@ class My_key_mouse_addon_pref(bpy.types.AddonPreferences):
         layout.label(
             text="Only in 3D viewport:")
         
-        layout.label(text="Ctrl + mouse Prev button = Use local view (like numpad slash)")
-        layout.label(text="Ctrl + mouse Next button = Use centering view on mouse (like Alt+F)")
+        layout.label(text="Ctrl + mouse Next button = Use local view (like numpad slash)")
+        #layout.label(text="Ctrl + mouse Prev button = Use centering view on mouse ")
 
         layout.label("Cursor Snapping:")
         layout.label("Shift + mouse Prev button = 3D cursor to selection")
         layout.label("Shift + mouse Next button = selection to 3D cursor")
         layout.label(text="")
 
+        layout.label("Extra:")
+        layout.label("Alt + middle mouse button = centering view on mouse (default shortcut in 2.8) as with Alt+F ")
+        layout.label("Alt + mouse Prev button = jump to prev keyframe ")
+        layout.label("Alt + mouse Next button = jump to next keyframe ")
+        layout.label(text="")
         layout.label(
             text="Customization (save settings and restart Blender to apply changes)")
         layout.prop(self, "mkmouse_invert_buttons")
+        '''
         layout.label(
             text="Options to swap calls in 3D viewport (accessible with 'ctrl' modifier):") 
         layout.prop(self, "mkmouse_viewport_center_on_mouse")
         layout.prop(self, "mkmouse_viewport_local_view")
+        '''
 
 def unregister_keymaps():
     wm = bpy.context.window_manager
