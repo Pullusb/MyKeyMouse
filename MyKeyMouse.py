@@ -35,7 +35,7 @@ def register_keymaps():
         key_two = "BUTTON4MOUSE"
 
     shortcuts_items = [
- 
+
     ##button 4 - focus selection
     ["3D View", "VIEW_3D", "view3d.view_selected", key_one],
     ["Graph Editor", "GRAPH_EDITOR", "graph.view_selected", key_one],
@@ -56,7 +56,6 @@ def register_keymaps():
     ["NLA Editor", "NLA_EDITOR", "nla.view_all", key_two],
     ["Sequencer", "SEQUENCE_EDITOR", "sequencer.view_all", key_two],
     ["SequencerPreview", "SEQUENCE_EDITOR", "sequencer.view_all_preview", key_two],
-    ["Logic Editor", "LOGIC_EDITOR", "logic.view_all", key_two],
     ["Clip Editor", "CLIP_EDITOR", "clip.view_all", key_two],
     ["Clip Graph Editor", "CLIP_EDITOR", "clip.graph_view_all", key_two],
     ["Clip Dopesheet Editor", "CLIP_EDITOR", "clip.dopesheet_view_all", key_two],
@@ -67,7 +66,7 @@ def register_keymaps():
 
     #other
     #["Frames", "EMPTY", "screen.keyframe_jump", key_one, False, False, True]
-    
+
     ]
 
     shortcuts_items.append(["3D View", "VIEW_3D", "view3d.localview", key_one, True, False, False])
@@ -76,7 +75,7 @@ def register_keymaps():
     shortcuts_items.append(["3D View", "VIEW_3D", "view3d.snap_cursor_to_selected", key_two, False, True, False])
     shortcuts_items.append(["3D View", "VIEW_3D", "view3d.snap_selected_to_cursor", key_one, False, True, False])
 
-    
+
     ##3D view > keymap view center pick on mouse (Alt+F) Changed to 'alt + MMB' to match early 2.8 settings
     #if LooseVersion(str(bpy.app.version)) < LooseVersion('(2, 80, 0)'):#only set for 2.79
     shortcuts_items.append(["3D View", "VIEW_3D", "view3d.view_center_pick", "MIDDLEMOUSE", False, False, True])
@@ -105,7 +104,7 @@ def register_keymaps():
 
 
 
-###---user pref 
+###---user pref
 
 class My_key_mouse_addon_pref(bpy.types.AddonPreferences):
     bl_idname = __name__
@@ -137,7 +136,7 @@ class My_key_mouse_addon_pref(bpy.types.AddonPreferences):
 
         layout.label(
             text="Only in 3D viewport:")
-        
+
         layout.label(text="Ctrl + mouse Next button = Use local view (like numpad slash)")
         #layout.label(text="Ctrl + mouse Prev button = Use centering view on mouse ")
 
@@ -156,7 +155,7 @@ class My_key_mouse_addon_pref(bpy.types.AddonPreferences):
         layout.prop(self, "mkmouse_invert_buttons")
         '''
         layout.label(
-            text="Options to swap calls in 3D viewport (accessible with 'ctrl' modifier):") 
+            text="Options to swap calls in 3D viewport (accessible with 'ctrl' modifier):")
         layout.prop(self, "mkmouse_viewport_center_on_mouse")
         layout.prop(self, "mkmouse_viewport_local_view")
         '''
