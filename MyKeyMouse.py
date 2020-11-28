@@ -125,7 +125,7 @@ class My_key_mouse_addon_pref(bpy.types.AddonPreferences):
     bl_idname = __name__
 
     mkmouse_invert_focus : bpy.props.BoolProperty(
-        name="Invert (prev button = view selected, next button = view all. Save settings and restart Blender to apply changes",
+        name="Invert (prev button = view selected, next button = view all. (Save prefs and restart Blender to apply changes)",
         default=False,
         )
     '''
@@ -141,35 +141,37 @@ class My_key_mouse_addon_pref(bpy.types.AddonPreferences):
 
     def draw(self, context):
         layout = self.layout
-        layout.label(
-            text="Focus control (all editor) :")
-        layout.label(
-            text="mouse Prev button = view all")
-        layout.label(
-            text="mouse Next button = view selected")
-        # layout.label(text="Customization ")
-        layout.prop(self, "mkmouse_invert_focus")
-        
-        layout.separator()
+        box = layout.box()
 
-        layout.label(text="Only in 3D viewport:")
-        layout.label(text="Ctrl + mouse Next button = Use local view (like numpad slash)")
-        #layout.label(text="Ctrl + mouse Prev button = Unnassigned")
-        layout.label(text="Cursor Snapping:")
-        layout.label(text="Shift + mouse Prev button = 3D cursor to selection")
-        layout.label(text="Shift + mouse Next button = selection to 3D cursor")
-        layout.label(text="Origin change:")
-        layout.label(text="Ctrl + Shift + alt + mouse Prev button = Origin to geometry")
-        layout.label(text="Ctrl + Shift + alt + mouse Next button = Origin to cursor")
+        box.label(
+            text="Focus control (all editor) :")
+        box.label(
+            text="mouse Prev button = view all")
+        box.label(
+            text="mouse Next button = view selected")
+        # box.label(text="Customization ")
+        box.prop(self, "mkmouse_invert_focus")
+        
+
+        box = layout.box()
+        box.label(text="Only in 3D viewport:")
+        box.label(text="Ctrl + mouse Next button = Use local view (like numpad slash)")
+        #box.label(text="Ctrl + mouse Prev button = Unnassigned")
+        # layout.separator()
+        box.label(text="Cursor Snapping:")
+        box.label(text="Shift + mouse Prev button = 3D cursor to selection")
+        box.label(text="Shift + mouse Next button = selection to 3D cursor")
+        # layout.separator()
+        box.label(text="Origin change:")
+        box.label(text="Ctrl + Shift + alt + mouse Prev button = Origin to geometry")
+        box.label(text="Ctrl + Shift + alt + mouse Next button = Origin to cursor")
 
         # layout.label(text="Alt + middle mouse button = centering view on mouse (default shortcut in 2.8) as with Alt+F ")
-        
-        layout.separator()
 
-        layout.label(text="In all editor:")
-        layout.label(text="Alt + mouse Prev button = jump to prev keyframe ")
-        layout.label(text="Alt + mouse Next button = jump to next keyframe ")
-    
+        box = layout.box()
+        box.label(text="In all editor:")
+        box.label(text="Alt + mouse Prev button = jump to prev keyframe ")
+        box.label(text="Alt + mouse Next button = jump to next keyframe ")
 
         '''
         layout.label(

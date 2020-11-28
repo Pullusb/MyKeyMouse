@@ -56,10 +56,11 @@ Thanks to [Vincent Lamy for the base idea](https://www.nothing-is-3d.com/article
 
 ## changelog:
 
-1.1.0 - 2020-11-28:
+1.1.1 - 2020-11-28:
 
 - feat: added cursor to selected and selection to cursor for grease pencil
 - fix: Bug in keymap register that could affect other addon's keymap
+- better UI for infos in addon prefs
 - readme: changelog formating updated
 
 1.0.0 - 13-09-2019:
