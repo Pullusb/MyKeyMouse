@@ -52,28 +52,44 @@ The location of *home* key and *numpad period* are far from both hands and force
  
 Thanks to [Vincent Lamy for the base idea](https://www.nothing-is-3d.com/article22/blender-utiliser-les-boutons-lateraux-de-la-souris)
 
-### update 1.0.0 (13/09/2019):
-  - invert preference work only on the focus/view all shortcut
-  - fixed bug with keyframe jumping
-  - new shortcut : move origin point
+---
 
-### update 0.0.9 (02/06/2019):
+## changelog:
+
+1.1.0 - 2020-11-28:
+
+- feat: added cursor to selected and selection to cursor for grease pencil
+- fix: Bug in keymap register that could affect other addon's keymap
+- readme: changelog formating updated
+
+1.0.0 - 13-09-2019:
+
+- invert preference work only on the focus/view all shortcut
+- fixed bug with keyframe jumping
+- new shortcut : move origin point
+
+0.0.9 - 02-06-2019:
+
 - full change of keymap setting:
   - inverting default shortchut to a more logical setup (prev = going back, next = going to).
   - suppressing all preferences that overcomplicated the addon, letting only the possibility to invert everything (maybe delete even this one  later).
 
-### update 0.0.8 (19/02/2019):
+0.0.8 - 19-02-2019:
+
 - 2.8 version
 
-### update 0.0.7 (05/06/2018):
+0.0.7 - 05-06-2018:
+
 - Added Alt combo to jump keyframe
 
-### update 0.0.4 and 0.0.5 (22/04/2018):
+0.0.4 - nd 0.0.5 (22-04-2018:
+
 - Fix bad keymap unregister
 - Added modifiers functions:
   - Shift combo : cursor to selection and selection to cursor
   - Ctrl combo : access alternative view tweak
 
-### updates 0.0.3 (14/04/2018):
+0.0.3 - 14-04-2018:
+
 - By default shortcuts are now completely consistent (view_selected and view all everywhere)
 - added addon preferences to invert buttons and customize shortcut in 3D view.

@@ -2,7 +2,7 @@ bl_info = {
     "name": "MyKeyMouse",
     "description": "Add 'view selected' and 'view all' actions to mouse buttons 4 and 5",
     "author": "Samuel Bernou",
-    "version": (1, 0, 0),
+    "version": (1, 1, 0),
     "blender": (2, 80, 0),
     "location": "Mouse button 4 (usually 'previous') and 5 (usually 'next') on almost all editors",
     "warning": "",
@@ -74,6 +74,10 @@ def register_keymaps():
     # Snapping utility with shift (cursor to selection and selection to selected)
     shortcuts_items.append(["3D View", "VIEW_3D", "view3d.snap_cursor_to_selected", key_prev, False, True, False])
     shortcuts_items.append(["3D View", "VIEW_3D", "view3d.snap_selected_to_cursor", key_next, False, True, False])
+    
+    # Same with GPencil (that have a different operator)
+    shortcuts_items.append(["Grease Pencil", "EMPTY", "gpencil.snap_cursor_to_selected", key_prev, False, True, False])
+    shortcuts_items.append(["Grease Pencil", "EMPTY", "gpencil.snap_selected_to_cursor", key_next, False, True, False])
 
 
     ## 2.79 : 3D view > keymap view center pick on mouse (Alt+F) Changed to 'alt + MMB' to match early 2.8 settings
@@ -89,25 +93,29 @@ def register_keymaps():
             kmi = km.keymap_items.new(item[2], type = item[3], value = "PRESS", ctrl=item[4], shift=item[5],alt=item[6])
         else:
             kmi = km.keymap_items.new(item[2], type = item[3], value = "PRESS")
-        addon_keymaps.append(km)
+        addon_keymaps.append((km, kmi))
 
     # Moving origin point utility, cursor/geometry. (hold properties)
     km = addon.keymaps.new(name = "3D View", space_type = "VIEW_3D")
     kmi = km.keymap_items.new("object.origin_set", type = key_next, value = "PRESS", ctrl = True, shift = True, alt = True)
     kmi.properties.type = 'ORIGIN_CURSOR'
+    addon_keymaps.append((km, kmi))
+    
     kmi = km.keymap_items.new("object.origin_set", type = key_prev, value = "PRESS", ctrl = True, shift = True, alt = True)
     kmi.properties.type = 'ORIGIN_GEOMETRY'
-    addon_keymaps.append(km)
+    addon_keymaps.append((km, kmi))
 
     # Combo keyframe jump with alt special case (hold properties). Button 6 et 7 not working with logitech software...
     km = addon.keymaps.new(name = "Window", space_type = "EMPTY")
     #kmi = km.keymap_items.new("screen.keyframe_jump", type = "BUTTON6MOUSE", value = "PRESS")
     kmi = km.keymap_items.new("screen.keyframe_jump", type = key_prev, value = "PRESS", alt = True)
     kmi.properties.next = False
+    addon_keymaps.append((km, kmi))
+
     #kmi = km.keymap_items.new("screen.keyframe_jump", type = "BUTTON7MOUSE", value = "PRESS")
     kmi = km.keymap_items.new("screen.keyframe_jump", type = key_next, value = "PRESS", alt = True)
     kmi.properties.next = True
-    addon_keymaps.append(km)
+    addon_keymaps.append((km, kmi))
 
 
 
@@ -171,14 +179,10 @@ class My_key_mouse_addon_pref(bpy.types.AddonPreferences):
         '''
 
 def unregister_keymaps():
-    wm = bpy.context.window_manager
-    for km in addon_keymaps:
-        for kmi in km.keymap_items:
-            km.keymap_items.remove(kmi)
-        ## Can't (and supposedly shouldn't ) suppress original category name...
-        # wm.keyconfigs.addon.keymaps.remove(km)
+    # wm = bpy.context.window_manager
+    for km, kmi in addon_keymaps:
+        km.keymap_items.remove(kmi)
     addon_keymaps.clear()
-
 
 
 ## note : register via bpy.utils.register_module(__name__) Fails !
