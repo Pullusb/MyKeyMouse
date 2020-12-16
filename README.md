@@ -41,6 +41,10 @@ The location of *home* key and *numpad period* are far from both hands and force
 - *Alt + mouse button 5* Jump to next keyframe  
 <br/>
 
+- *Alt + Shift + mouse button 4* Jump to previous Marker  
+- *Alt + Shift + mouse button 5* Jump to next Marker  
+<br/>
+
 - *Ctrl + Shift + alt + mouse mouse button 4* Origin to geometry
 - *Ctrl + Shift + alt + mouse mouse button 5* Origin to cursor
 <br/>
@@ -55,6 +59,10 @@ Thanks to [Vincent Lamy for the base idea](https://www.nothing-is-3d.com/article
 ---
 
 ## changelog:
+
+1.2.0 - 2020-12-16:
+
+- new shortcut: jump prev/next marker with `shift+alt+mouse4/5` (in every editor)
 
 1.1.1 - 2020-11-28:
 

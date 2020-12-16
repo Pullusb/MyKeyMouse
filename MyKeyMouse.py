@@ -2,7 +2,7 @@ bl_info = {
     "name": "MyKeyMouse",
     "description": "Add 'view selected' and 'view all' actions to mouse buttons 4 and 5",
     "author": "Samuel Bernou",
-    "version": (1, 1, 0),
+    "version": (1, 2, 0),
     "blender": (2, 80, 0),
     "location": "Mouse button 4 (usually 'previous') and 5 (usually 'next') on almost all editors",
     "warning": "",
@@ -105,19 +105,24 @@ def register_keymaps():
     kmi.properties.type = 'ORIGIN_GEOMETRY'
     addon_keymaps.append((km, kmi))
 
-    # Combo keyframe jump with alt special case (hold properties). Button 6 et 7 not working with logitech software...
+    # Combo keyframe jump with alt special case (hold properties). Button BUTTON6MOUSE et 7 not working with logitech software...
     km = addon.keymaps.new(name = "Window", space_type = "EMPTY")
-    #kmi = km.keymap_items.new("screen.keyframe_jump", type = "BUTTON6MOUSE", value = "PRESS")
     kmi = km.keymap_items.new("screen.keyframe_jump", type = key_prev, value = "PRESS", alt = True)
     kmi.properties.next = False
     addon_keymaps.append((km, kmi))
 
-    #kmi = km.keymap_items.new("screen.keyframe_jump", type = "BUTTON7MOUSE", value = "PRESS")
     kmi = km.keymap_items.new("screen.keyframe_jump", type = key_next, value = "PRESS", alt = True)
     kmi.properties.next = True
     addon_keymaps.append((km, kmi))
+    
+    ## jump to marker
+    kmi = km.keymap_items.new("screen.marker_jump", type = key_prev, value = "PRESS", alt = True, shift = True)
+    kmi.properties.next = False
+    addon_keymaps.append((km, kmi))
 
-
+    kmi = km.keymap_items.new("screen.marker_jump", type = key_next, value = "PRESS", alt = True, shift = True)
+    kmi.properties.next = True
+    addon_keymaps.append((km, kmi))
 
 ###---user pref
 
@@ -170,8 +175,10 @@ class My_key_mouse_addon_pref(bpy.types.AddonPreferences):
 
         box = layout.box()
         box.label(text="In all editor:")
-        box.label(text="Alt + mouse Prev button = jump to prev keyframe ")
-        box.label(text="Alt + mouse Next button = jump to next keyframe ")
+        box.label(text="Alt + mouse Prev button = jump to prev keyframe")
+        box.label(text="Alt + mouse Next button = jump to next keyframe")
+        box.label(text="Alt + Shift + mouse Prev button = jump to prev marker")
+        box.label(text="Alt + Shift + mouse Next button = jump to next marker")
 
         '''
         layout.label(
@@ -183,7 +190,8 @@ class My_key_mouse_addon_pref(bpy.types.AddonPreferences):
 def unregister_keymaps():
     # wm = bpy.context.window_manager
     for km, kmi in addon_keymaps:
-        km.keymap_items.remove(kmi)
+        if kmi in km.keymap_items:
+            km.keymap_items.remove(kmi)
     addon_keymaps.clear()
 
 
