@@ -60,6 +60,10 @@ Thanks to [Vincent Lamy for the base idea](https://www.nothing-is-3d.com/article
 
 ## changelog:
 
+1.2.1 - 2020-12-20:
+
+- fix: keymap unregister
+
 1.2.0 - 2020-12-16:
 
 - new shortcut: jump prev/next marker with `shift+alt+mouse4/5` (in every editor)

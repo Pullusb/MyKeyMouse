@@ -2,11 +2,11 @@ bl_info = {
     "name": "MyKeyMouse",
     "description": "Add 'view selected' and 'view all' actions to mouse buttons 4 and 5",
     "author": "Samuel Bernou",
-    "version": (1, 2, 0),
+    "version": (1, 2, 1),
     "blender": (2, 80, 0),
     "location": "Mouse button 4 (usually 'previous') and 5 (usually 'next') on almost all editors",
     "warning": "",
-    "wiki_url": "",
+    "doc_url": "https://github.com/Pullusb/MyKeyMouse",
     "category": "Object" }
 
 import bpy
@@ -93,6 +93,8 @@ def register_keymaps():
             kmi = km.keymap_items.new(item[2], type = item[3], value = "PRESS", ctrl=item[4], shift=item[5],alt=item[6])
         else:
             kmi = km.keymap_items.new(item[2], type = item[3], value = "PRESS")
+        
+        # print(item[2],'-->', kmi)
         addon_keymaps.append((km, kmi))
 
     # Moving origin point utility, cursor/geometry. (hold properties)
@@ -174,9 +176,10 @@ class My_key_mouse_addon_pref(bpy.types.AddonPreferences):
         # layout.label(text="Alt + middle mouse button = centering view on mouse (default shortcut in 2.8) as with Alt+F ")
 
         box = layout.box()
-        box.label(text="In all editor:")
+        box.label(text="Timeline related (all editor):")
         box.label(text="Alt + mouse Prev button = jump to prev keyframe")
         box.label(text="Alt + mouse Next button = jump to next keyframe")
+
         box.label(text="Alt + Shift + mouse Prev button = jump to prev marker")
         box.label(text="Alt + Shift + mouse Next button = jump to next marker")
 
@@ -190,8 +193,7 @@ class My_key_mouse_addon_pref(bpy.types.AddonPreferences):
 def unregister_keymaps():
     # wm = bpy.context.window_manager
     for km, kmi in addon_keymaps:
-        if kmi in km.keymap_items:
-            km.keymap_items.remove(kmi)
+        km.keymap_items.remove(kmi)
     addon_keymaps.clear()
 
 
