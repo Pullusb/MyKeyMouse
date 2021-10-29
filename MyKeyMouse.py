@@ -2,7 +2,7 @@ bl_info = {
     "name": "MyKeyMouse",
     "description": "Add 'view selected' and 'view all' actions to mouse buttons 4 and 5",
     "author": "Samuel Bernou",
-    "version": (1, 2, 1),
+    "version": (1, 2, 2),
     "blender": (2, 80, 0),
     "location": "Mouse button 4 (usually 'previous') and 5 (usually 'next') on almost all editors",
     "warning": "",
@@ -201,14 +201,16 @@ def unregister_keymaps():
 ## addons prefs isn't loaded when keymap_register try to access it.
 
 def register():
-    if not bpy.app.background:
-        bpy.utils.register_class(My_key_mouse_addon_pref)
-        register_keymaps()
+    if bpy.app.background:
+        return
+    bpy.utils.register_class(My_key_mouse_addon_pref)
+    register_keymaps()
 
 def unregister():
-    if not bpy.app.background:
-        unregister_keymaps()
-        bpy.utils.unregister_class(My_key_mouse_addon_pref)
+    if bpy.app.background:
+        return
+    unregister_keymaps()
+    bpy.utils.unregister_class(My_key_mouse_addon_pref)
 
 if __name__ == "__main__":
     register()
