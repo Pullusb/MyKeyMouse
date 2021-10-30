@@ -1,10 +1,12 @@
 # MyKeyMouse
 Blender keymapper addon - Map shortcuts on mouse button 4 and 5 for mouse with additional buttons.
 
-**[Download latest](https://github.com/Pullusb/MyKeyMouse/raw/master/MyKeyMouse.py)** (right click, save Target as)  
+**[Download latest](https://github.com/Pullusb/snippetsLibrary/archive/refs/heads/master.zip)** (right click, save Target as)  
 
-**[Download older (2.7 version)](https://github.com/Pullusb/MyKeyMouse/raw/master/MyKeyMouse_279.py)** (right click, save Target as)
-  
+For older blender 2.7 version go [here](https://github.com/Pullusb/SB_blender_addons_old_2_7)
+
+If you want to support me, you can buy things on my [gumroad](https://pullusb.gumroad.com) or [blender market](https://blendermarket.com/creators/pullup) pages (other mean to support [here](http://www.samuelbernou.fr/donate)).
+
 --------
   
 ### Description
@@ -55,54 +57,3 @@ The location of *home* key and *numpad period* are far from both hands and force
 -->
  
 Thanks to [Vincent Lamy for the base idea](https://www.nothing-is-3d.com/article22/blender-utiliser-les-boutons-lateraux-de-la-souris)
-
----
-
-## changelog:
-
-1.2.1 - 2020-12-20:
-
-- fix: keymap unregister
-
-1.2.0 - 2020-12-16:
-
-- new shortcut: jump prev/next marker with `shift+alt+mouse4/5` (in every editor)
-
-1.1.1 - 2020-11-28:
-
-- feat: added cursor to selected and selection to cursor for grease pencil
-- fix: Bug in keymap register that could affect other addon's keymap
-- better UI for infos in addon prefs
-- readme: changelog formating updated
-
-1.0.0 - 13-09-2019:
-
-- invert preference work only on the focus/view all shortcut
-- fixed bug with keyframe jumping
-- new shortcut : move origin point
-
-0.0.9 - 02-06-2019:
-
-- full change of keymap setting:
-  - inverting default shortchut to a more logical setup (prev = going back, next = going to).
-  - suppressing all preferences that overcomplicated the addon, letting only the possibility to invert everything (maybe delete even this one  later).
-
-0.0.8 - 19-02-2019:
-
-- 2.8 version
-
-0.0.7 - 05-06-2018:
-
-- Added Alt combo to jump keyframe
-
-0.0.4 - nd 0.0.5 (22-04-2018:
-
-- Fix bad keymap unregister
-- Added modifiers functions:
-  - Shift combo : cursor to selection and selection to cursor
-  - Ctrl combo : access alternative view tweak
-
-0.0.3 - 14-04-2018:
-
-- By default shortcuts are now completely consistent (view_selected and view all everywhere)
-- added addon preferences to invert buttons and customize shortcut in 3D view.
