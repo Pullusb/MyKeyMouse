@@ -1,7 +1,7 @@
 # MyKeyMouse
 Blender keymapper addon - Map shortcuts on mouse button 4 and 5 for mouse with additional buttons.
 
-**[Download latest](https://github.com/Pullusb/snippetsLibrary/archive/refs/heads/master.zip)** (right click, save Target as)  
+**[Download latest](https://github.com/Pullusb/MyKeyMouse/archive/refs/heads/master.zip)** (right click, save Target as)  
 
 For older blender 2.7 version go [here](https://github.com/Pullusb/SB_blender_addons_old_2_7)
 
